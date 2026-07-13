@@ -1,0 +1,18 @@
+{
+  "name": "projeto-tcc",
+  "version": "1.0.0",
+  "description": "Projeto de Automação de Testes E2E de Checkout para TCC",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --runInBand"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "jest": "^30.4.2",
+    "jest-html-reporter": "^4.4.0",
+    "selenium-webdriver": "^4.46.0"
+  }
+}
