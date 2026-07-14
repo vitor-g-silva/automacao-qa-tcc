@@ -3,7 +3,7 @@ const { until } = require('selenium-webdriver');
 class BasePage {
   constructor(driver) {
     this.driver = driver;
-    this.timeout = 15000; // tempo máximo de espera para elementos (em milissegundos) 
+    this.timeout = 10000; // 10 segundos de espera máxima por elemento
   }
 
   async getText(locator) {
@@ -17,21 +17,10 @@ class BasePage {
     return el;
   }
 
-async click(locator) {
-  const el = await this.waitForVisible(locator);
-
-  await this.driver.wait(
-    until.elementIsEnabled(el),
-    this.timeout
-  );
-
-  await this.driver.executeScript(
-    'arguments[0].scrollIntoView({block: "center"});',
-    el
-  );
-
-  await el.click();
-}
+  async click(locator) {
+    const el = await this.waitForVisible(locator);
+    await el.click();
+  }
 
   async type(locator, texto) {
     const el = await this.waitForVisible(locator);
@@ -49,7 +38,6 @@ async click(locator) {
   };
 
   async waitForUrlContains(trecho) {
-
     await this.driver.wait(until.urlContains(trecho), this.timeout);
   }
 

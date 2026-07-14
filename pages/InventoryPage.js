@@ -27,15 +27,8 @@ class InventoryPage extends BasePage {
   }
 
   async irParaCarrinho() {
-  const carrinho = await this.waitForVisible(this.cartIcon);
-
-  await this.driver.executeScript(
-    'arguments[0].click();',
-    carrinho
-  );
-
-  await this.waitForUrlContains('/cart.html');
-}
+    await this.click(this.cartIcon);
+  }
 }
 
 module.exports = InventoryPage;

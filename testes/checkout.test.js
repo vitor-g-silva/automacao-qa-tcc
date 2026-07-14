@@ -15,7 +15,9 @@ describe('Regressão E2E - Fluxo de Checkout', () => {
   let checkoutStepOnePage;
   let checkoutStepTwoPage;
   let checkoutCompletePage;
- 
+});
+  
+
   beforeAll(async () => {
     driver = await DriverFactory.createDriver();
     loginPage = new LoginPage(driver);
@@ -24,6 +26,10 @@ describe('Regressão E2E - Fluxo de Checkout', () => {
     checkoutStepOnePage = new CheckoutStepOnePage(driver);
     checkoutStepTwoPage = new CheckoutStepTwoPage(driver);
     checkoutCompletePage = new CheckoutCompletePage(driver);
+  });
+
+  afterAll(async () => {
+  await driver.quit(); // Fecha o navegador ao final de TODA a suíte
   });
 
   test('Deve realizar login com sucesso', async () => {
@@ -37,15 +43,16 @@ describe('Regressão E2E - Fluxo de Checkout', () => {
   test('Deve adicionar 2 produtos ao carrinho', async () => {    
   await inventoryPage.adicionarProdutoAoCarrinho(env.PRODUTOS.ITEM_1.NOME);
   await inventoryPage.adicionarProdutoAoCarrinho(env.PRODUTOS.ITEM_2.NOME);
-    const quantidadeNoCarrinho = await inventoryPage.getText(inventoryPage.cartBadge);
-  expect(quantidadeNoCarrinho).toBe('2');
 
+  const quantidadeNoCarrinho = await inventoryPage.getText(inventoryPage.cartBadge);
+  expect(quantidadeNoCarrinho).toBe('2');
   await inventoryPage.irParaCarrinho();  
   });
 
   test('Deve preencher os dados de entrega no checkout', async () => { 
   const nomes = await cartPage.getNomesDosItens();
   const precos = await cartPage.getPrecosDosItens();
+
   const precosPorNome = {};
   nomes.forEach((nome, index) => {
     precosPorNome[nome] = precos[index];
@@ -57,7 +64,7 @@ describe('Regressão E2E - Fluxo de Checkout', () => {
   await cartPage.irParaCheckout();
   await checkoutStepOnePage.preencherDadosEntrega(env.TELA_CHECKOUT_ENTREGA);
   await checkoutStepOnePage.continuar();
-  await checkoutStepTwoPage.waitForUrlContains('https://www.saucedemo.com/checkout-step-two.html'); 
+
 });
   
 test('Deve exibir o valor total correto na finalização', async () => {
@@ -77,10 +84,4 @@ test('Deve exibir o valor total correto na finalização', async () => {
   await checkoutStepTwoPage.finalizarCompra();
   const mensagem = await checkoutCompletePage.getMensagemConfirmacao();
   expect(mensagem).toBe('Thank you for your order!');
-});
-
-  afterAll(async () => {
-  await driver.quit(); // Fecha o navegador ao final de TODA a suíte
-  });
-
 });

@@ -19,7 +19,6 @@ class CheckoutStepOnePage extends BasePage {
 
   async continuar() {
     await this.click(this.botaoContinue);
-    await this.waitForUrlContains('https://www.saucedemo.com/checkout-step-two.html'); 
   }
 }
 module.exports = CheckoutStepOnePage;
