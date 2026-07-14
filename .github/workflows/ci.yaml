@@ -23,11 +23,15 @@ jobs:
         run: npm install
 
       - name: Instalar Google Chrome
-        uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        uses: browser-actions/setup-chrome@v2
+        with:
+          install-chromedriver: true
 
       - name: Rodar suíte de testes E2E
         env:
           HEADLESS: 'true'
+          CHROME_BINARY: ${{ steps.setup-chrome.outputs.chrome-path }}
         run: npm test
 
       - name: Publicar relatório HTML como artefato
