@@ -14,7 +14,8 @@ class DriverFactory {
       options.addArguments('--headless=new');
       options.addArguments('--disable-gpu');          // recomendado em headless no Linux
       options.addArguments('--no-sandbox');            // obrigatório em containers/CI (sem isso, o Chrome recusa iniciar como root)
-      options.addArguments('--disable-dev-shm-usage'); // evita erro de memória compartilhada limitada em runners do GitHub Actions
+      options.addArguments('--disable-dev-shm-usage');
+      options.addArguments('--window-size=1920,1080');
     }
 
     options.addArguments('--window-size=1920,1080');

@@ -1,3 +1,4 @@
+jest.setTimeout(120000);
 const DriverFactory = require('../config/DriverFactory');
 const env = require('../config/env');
 const LoginPage = require('../pages/LoginPage');
@@ -19,7 +20,6 @@ describe('Regressão E2E - Fluxo de Checkout', () => {
   
 
   beforeAll(async () => {
-    jest.setTimeout(120000);
     driver = await DriverFactory.createDriver();
     loginPage = new LoginPage(driver);
     inventoryPage = new InventoryPage(driver);
