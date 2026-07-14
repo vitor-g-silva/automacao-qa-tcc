@@ -22,9 +22,6 @@ jobs:
       - name: Instalar dependências
         run: npm install
 
-      - name: Instalar Google Chrome
-        uses: browser-actions/setup-chrome@v1
-
       - name: Rodar suíte de testes E2E
         env:
           HEADLESS: 'true'
