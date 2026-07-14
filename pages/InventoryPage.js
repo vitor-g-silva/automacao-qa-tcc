@@ -1,4 +1,4 @@
-const { By } = require('selenium-webdriver');
+const { By, until } = require('selenium-webdriver');
 const BasePage = require('./BasePage');
 
 class InventoryPage extends BasePage {
@@ -27,8 +27,13 @@ class InventoryPage extends BasePage {
   }
 
   async irParaCarrinho() {
-    await this.click(this.cartIcon);
-  }
+  await this.click(this.cartIcon);
+
+  await this.driver.wait(
+    until.urlContains('/cart.html'),
+    10000
+  );
+}
 }
 
 module.exports = InventoryPage;

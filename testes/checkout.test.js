@@ -73,6 +73,12 @@ await inventoryPage.irParaCarrinho();
   });
 
   test('Deve preencher os dados de entrega no checkout', async () => { 
+  const checkoutVisivel = await cartPage.isDisplayed(
+  cartPage.botaoCheckout,
+  10000
+);
+
+expect(checkoutVisivel).toBe(true);  
   const nomes = await cartPage.getNomesDosItens();
   const precos = await cartPage.getPrecosDosItens();
 
@@ -107,7 +113,7 @@ test('Deve exibir o valor total correto na finalização', async () => {
   await checkoutStepTwoPage.finalizarCompra();
   const mensagem = await checkoutCompletePage.getMensagemConfirmacao();
   expect(mensagem).toBe('Thank you for your order!');
-  
+
   afterAll(async () => {
   await driver.quit(); // Fecha o navegador ao final de TODA a suíte
   });
