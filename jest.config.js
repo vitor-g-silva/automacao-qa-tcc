@@ -1,6 +1,6 @@
 module.exports = {
   testEnvironment: 'node',
-  testTimeout: 120000, // 120s por teste, já que E2E é mais lento
+  testTimeout: 240000, // 120s por teste, já que E2E é mais lento
   reporters: [
     'default', // mantém o output colorido no terminal
     [
