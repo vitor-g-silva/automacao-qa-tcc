@@ -2,9 +2,9 @@ name: Regressão E2E - Checkout
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   testes-e2e:
