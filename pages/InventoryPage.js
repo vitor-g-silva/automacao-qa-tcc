@@ -27,9 +27,15 @@ class InventoryPage extends BasePage {
   }
 
   async irParaCarrinho() {
-    
+
+        console.log("Antes:", await this.driver.getCurrentUrl());
+
     await this.click(this.cartIcon);
+
+    console.log("Depois:", await this.driver.getCurrentUrl());
+
     await this.waitForUrlContains('/cart.html');
+    
   }
 }
 
