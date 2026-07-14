@@ -1,4 +1,4 @@
-const { By, until } = require('selenium-webdriver');
+const { By } = require('selenium-webdriver');
 const BasePage = require('./BasePage');
 
 class InventoryPage extends BasePage {
