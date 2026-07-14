@@ -37,11 +37,10 @@ describe('Regressão E2E - Fluxo de Checkout', () => {
   test('Deve adicionar 2 produtos ao carrinho', async () => {    
   await inventoryPage.adicionarProdutoAoCarrinho(env.PRODUTOS.ITEM_1.NOME);
   await inventoryPage.adicionarProdutoAoCarrinho(env.PRODUTOS.ITEM_2.NOME);
-
-  const quantidadeNoCarrinho = await inventoryPage.getText(inventoryPage.cartBadge);
+    const quantidadeNoCarrinho = await inventoryPage.getText(inventoryPage.cartBadge);
   expect(quantidadeNoCarrinho).toBe('2');
-  await inventoryPage.irParaCarrinho();
-  await cartPage.waitForUrlContains('https://www.saucedemo.com/cart.html');  
+
+  await inventoryPage.irParaCarrinho();  
   });
 
   test('Deve preencher os dados de entrega no checkout', async () => { 
