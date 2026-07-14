@@ -28,7 +28,7 @@ class InventoryPage extends BasePage {
 
   async irParaCarrinho() {
     await this.click(this.cartIcon);
-    await this.waitForUrlContains('cart.html');
+    await this.waitForUrlContains('https://www.saucedemo.com/cart.html');
   }
 }
 
