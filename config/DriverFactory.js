@@ -6,9 +6,17 @@ class DriverFactory {
   static async createDriver() {
     const options = new chrome.Options();
 
-    if (env.HEADLESS === true) {
+    const rodarHeadless = process.env.HEADLESS // para CI/CD, permite passar o valor via variável de ambiente, ex: HEADLESS=true npm test
+      ? process.env.HEADLESS === 'true' 
+      : env.HEADLESS === true; // valor padrão do env.js
+
+    if (rodarHeadless) {
       options.addArguments('--headless=new');
+      options.addArguments('--disable-gpu');          // recomendado em headless no Linux
+      options.addArguments('--no-sandbox');            // obrigatório em containers/CI (sem isso, o Chrome recusa iniciar como root)
+      options.addArguments('--disable-dev-shm-usage'); // evita erro de memória compartilhada limitada em runners do GitHub Actions
     }
+
     options.addArguments('--window-size=1920,1080');
 
     const driver = await new Builder()
@@ -16,7 +24,10 @@ class DriverFactory {
       .setChromeOptions(options)
       .build();
 
-    await driver.manage().window().maximize();
+    if (!rodarHeadless) {
+      await driver.manage().window().maximize();
+    }
+
     return driver;
   }
 }
