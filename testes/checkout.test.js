@@ -52,7 +52,12 @@ await driver.wait(
   'O carrinho não foi atualizado para 1 produto'
 );
 await inventoryPage.adicionarProdutoAoCarrinho(
-  env.PRODUTOS.ITEM_2.NOME
+  env.PRODUTOS.ITEM_1.NOME,
+  1
+);
+await inventoryPage.adicionarProdutoAoCarrinho(
+  env.PRODUTOS.ITEM_2.NOME,
+  2
 );
 // Aguarda o segundo produto aparecer no contador
 await driver.wait(
