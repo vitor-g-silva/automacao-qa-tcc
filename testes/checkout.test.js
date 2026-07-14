@@ -1,4 +1,3 @@
-jest.setTimeout(120000);
 const DriverFactory = require('../config/DriverFactory');
 const env = require('../config/env');
 const LoginPage = require('../pages/LoginPage');
@@ -25,10 +24,6 @@ describe('Regressão E2E - Fluxo de Checkout', () => {
     checkoutStepOnePage = new CheckoutStepOnePage(driver);
     checkoutStepTwoPage = new CheckoutStepTwoPage(driver);
     checkoutCompletePage = new CheckoutCompletePage(driver);
-  });
-
-  afterAll(async () => {
-  await driver.quit(); // Fecha o navegador ao final de TODA a suíte
   });
 
   test('Deve realizar login com sucesso', async () => {
@@ -84,5 +79,9 @@ test('Deve exibir o valor total correto na finalização', async () => {
   const mensagem = await checkoutCompletePage.getMensagemConfirmacao();
   expect(mensagem).toBe('Thank you for your order!');
 });
+
+  afterAll(async () => {
+  await driver.quit(); // Fecha o navegador ao final de TODA a suíte
+  });
 
 });
