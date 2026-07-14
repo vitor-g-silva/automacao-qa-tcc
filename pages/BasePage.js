@@ -3,7 +3,7 @@ const { until } = require('selenium-webdriver');
 class BasePage {
   constructor(driver) {
     this.driver = driver;
-    this.timeout = 300000; // 5 minutos de espera maxima para elementos 
+    this.timeout = 100000; // tempo máximo de espera para elementos (em milissegundos) 
   }
 
   async getText(locator) {
