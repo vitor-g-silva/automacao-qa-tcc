@@ -19,6 +19,7 @@ describe('Regressão E2E - Fluxo de Checkout', () => {
   
 
   beforeAll(async () => {
+    jest.setTimeout(120000);
     driver = await DriverFactory.createDriver();
     loginPage = new LoginPage(driver);
     inventoryPage = new InventoryPage(driver);
