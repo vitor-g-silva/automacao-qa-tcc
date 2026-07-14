@@ -40,13 +40,13 @@ describe('Regressão E2E - Fluxo de Checkout', () => {
 
   const quantidadeNoCarrinho = await inventoryPage.getText(inventoryPage.cartBadge);
   expect(quantidadeNoCarrinho).toBe('2');
-  await inventoryPage.irParaCarrinho();  
+  await inventoryPage.irParaCarrinho();
+  await cartPage.waitForUrlContains('https://www.saucedemo.com/cart.html');  
   });
 
   test('Deve preencher os dados de entrega no checkout', async () => { 
   const nomes = await cartPage.getNomesDosItens();
   const precos = await cartPage.getPrecosDosItens();
-
   const precosPorNome = {};
   nomes.forEach((nome, index) => {
     precosPorNome[nome] = precos[index];
@@ -58,7 +58,7 @@ describe('Regressão E2E - Fluxo de Checkout', () => {
   await cartPage.irParaCheckout();
   await checkoutStepOnePage.preencherDadosEntrega(env.TELA_CHECKOUT_ENTREGA);
   await checkoutStepOnePage.continuar();
-
+  await checkoutStepTwoPage.waitForUrlContains('https://www.saucedemo.com/checkout-step-two.html'); 
 });
   
 test('Deve exibir o valor total correto na finalização', async () => {
