@@ -16,9 +16,7 @@ describe('Regressão E2E - Fluxo de Checkout', () => {
   let checkoutStepOnePage;
   let checkoutStepTwoPage;
   let checkoutCompletePage;
-});
-  
-
+ 
   beforeAll(async () => {
     driver = await DriverFactory.createDriver();
     loginPage = new LoginPage(driver);
@@ -85,4 +83,6 @@ test('Deve exibir o valor total correto na finalização', async () => {
   await checkoutStepTwoPage.finalizarCompra();
   const mensagem = await checkoutCompletePage.getMensagemConfirmacao();
   expect(mensagem).toBe('Thank you for your order!');
+});
+
 });
