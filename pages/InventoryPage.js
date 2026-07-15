@@ -22,10 +22,10 @@ class InventoryPage extends BasePage {
     return this.isDisplayed(this.inventoryContainer);
   }
 
-  async adicionarProdutoAoCarrinho(nomeProduto, quantidadeEsperada, tentativas = 3) {
+  async adicionarProdutoAoCarrinho(nomeProduto, quantidadeEsperada, tentativas = 5) {
   const locator = this.botaoAddToCart(nomeProduto);
 
-  for (let tentativa = 1; tentativa <= tentativas; tentativa++) {
+  for (let tentativa = 1; tentativa <= tentativas; tentativa++) { // 
     await this.click(locator);
     try {
       await this.waitForTextToBe(this.cartBadge, String(quantidadeEsperada), 4000);

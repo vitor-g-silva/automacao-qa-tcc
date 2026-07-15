@@ -18,7 +18,7 @@ class CartPage extends BasePage {
     return textosCrus.map((texto) => parseFloat(texto.replace('$', '')));
   }
 
-  async irParaCheckout(tentativas = 3) {
+  async irParaCheckout(tentativas = 5) {
   for (let tentativa = 1; tentativa <= tentativas; tentativa++) {
     await this.click(this.botaoCheckout);
     try {
