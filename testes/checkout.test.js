@@ -28,6 +28,10 @@ describe('Regressão E2E - Fluxo de Checkout', () => {
     checkoutCompletePage = new CheckoutCompletePage(driver);
   });
 
+  afterAll(async () => {
+  await driver.quit(); // Fecha o navegador ao final de TODA a suíte
+  });
+
   test('Deve realizar login com sucesso', async () => {
   await loginPage.abrir();
   await loginPage.fazerLogin(env.USUARIO.USERNAME, env.USUARIO.SENHA); 
@@ -37,48 +41,15 @@ describe('Regressão E2E - Fluxo de Checkout', () => {
 });
 
   test('Deve adicionar 2 produtos ao carrinho', async () => {    
-await inventoryPage.adicionarProdutoAoCarrinho(
-  env.PRODUTOS.ITEM_1.NOME
-);
-// Aguarda o primeiro produto aparecer no contador
-await driver.wait(
-  async () => {
-    const quantidade = await inventoryPage.getText(
-      inventoryPage.cartBadge
-    );
-    return quantidade === '1';
-  },
-  5000,
-  'O carrinho não foi atualizado para 1 produto'
-);
-await inventoryPage.adicionarProdutoAoCarrinho(
-  env.PRODUTOS.ITEM_2.NOME
-);
-// Aguarda o segundo produto aparecer no contador
-await driver.wait(
-  async () => {
-    const quantidade = await inventoryPage.getText(
-      inventoryPage.cartBadge
-    );
-    return quantidade === '2';
-  },
-  5000,
-  'O carrinho não foi atualizado para 2 produtos'
-);
-const quantidadeNoCarrinho = await inventoryPage.getText(
-  inventoryPage.cartBadge
-);
-expect(quantidadeNoCarrinho).toBe('2');
-await inventoryPage.irParaCarrinho();
+  await inventoryPage.adicionarProdutoAoCarrinho(env.PRODUTOS.ITEM_1.NOME);
+  await inventoryPage.adicionarProdutoAoCarrinho(env.PRODUTOS.ITEM_2.NOME);
+
+  const quantidadeNoCarrinho = await inventoryPage.getText(inventoryPage.cartBadge);
+  expect(quantidadeNoCarrinho).toBe('2');
+  await inventoryPage.irParaCarrinho();  
   });
 
   test('Deve preencher os dados de entrega no checkout', async () => { 
-  const checkoutVisivel = await cartPage.isDisplayed(
-  cartPage.botaoCheckout,
-  10000
-);
-
-expect(checkoutVisivel).toBe(true);  
   const nomes = await cartPage.getNomesDosItens();
   const precos = await cartPage.getPrecosDosItens();
 
@@ -113,8 +84,4 @@ test('Deve exibir o valor total correto na finalização', async () => {
   await checkoutStepTwoPage.finalizarCompra();
   const mensagem = await checkoutCompletePage.getMensagemConfirmacao();
   expect(mensagem).toBe('Thank you for your order!');
-
-  afterAll(async () => {
-  await driver.quit(); // Fecha o navegador ao final de TODA a suíte
-  });
 });

@@ -22,33 +22,13 @@ class InventoryPage extends BasePage {
     return this.isDisplayed(this.inventoryContainer);
   }
 
-  async adicionarProdutoAoCarrinho(nomeProduto, quantidadeEsperada) {
-  await this.click(this.botaoAddToCart(nomeProduto));
-
-  await this.driver.wait(
-    async () => {
-      const badges = await this.driver.findElements(this.cartBadge);
-
-      if (badges.length === 0) {
-        return false;
-      }
-
-      const quantidadeAtual = await badges[0].getText();
-      return quantidadeAtual === String(quantidadeEsperada);
-    },
-    10000,
-    `O carrinho não foi atualizado para ${quantidadeEsperada} produto(s)`
-  );
-}
+  async adicionarProdutoAoCarrinho(nomeProduto) {
+    await this.click(this.botaoAddToCart(nomeProduto));
+  }
 
   async irParaCarrinho() {
-  await this.click(this.cartIcon);
-
-  await this.driver.wait(
-    until.urlContains('/cart.html'),
-    10000
-  );
-}
+    await this.click(this.cartIcon);
+  }
 }
 
 module.exports = InventoryPage;
