@@ -28,4 +28,4 @@ Os testes são executados na plataforma https://www.saucedemo.com, ambiente púb
 - Esperas explícitas (WebDriverWait) em vez de pausas fixas, evitando testes lentos e/ou instáveis
 - Retry cirúrgico em ações historicamente sensíveis a variações de rede (adicionar ao carrinho, avançar para o checkout), sem reexecutar o fluxo inteiro em caso de falha pontual
 - Massa de dados centralizada (env.js), desacoplada da lógica de teste
-- Validação por nome, não por posição, ao comparar produtos entre a tela e os dados esperados — resiliente a mudanças de ordenação
+- Validação por nome, não por posição, ao comparar produtos entre a tela e os dados esperados — resiliente a mudanças de ordenação.
