@@ -26,7 +26,14 @@ class BasePage {
     return (visivel && habilitado) ? elementos[0] : null;
   }, this.timeout, `Elemento não ficou clicável a tempo: ${locator}`);
 
-  await el.click();
+    await this.driver.executeScript('arguments[0].scrollIntoView({block: "center"});', el);
+
+  try {
+    await el.click();
+  } catch (erro) {
+    // Fallback: clique via JavaScript, contorna problemas de sobreposição/coordenadas em headless
+    await this.driver.executeScript('arguments[0].click();', el);
+  }
   }
 
   async type(locator, texto) {
