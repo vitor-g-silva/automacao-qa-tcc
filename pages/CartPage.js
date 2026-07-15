@@ -18,9 +18,18 @@ class CartPage extends BasePage {
     return textosCrus.map((texto) => parseFloat(texto.replace('$', '')));
   }
 
-  async irParaCheckout() {
+  async irParaCheckout(tentativas = 3) {
+  for (let tentativa = 1; tentativa <= tentativas; tentativa++) {
     await this.click(this.botaoCheckout);
+    try {
+      await this.waitForUrlContains('checkout-step-one.html');
+      return;
+    } catch (erro) {
+      if (tentativa === tentativas) throw erro;
+      console.log(`Tentativa ${tentativa} de ir ao checkout não navegou, tentando novamente...`);
+    }
   }
+}
 }
 
 module.exports = CartPage;

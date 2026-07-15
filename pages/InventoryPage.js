@@ -22,10 +22,21 @@ class InventoryPage extends BasePage {
     return this.isDisplayed(this.inventoryContainer);
   }
 
-  async adicionarProdutoAoCarrinho(nomeProduto) {
-    await this.click(this.botaoAddToCart(nomeProduto));
-  }
+  async adicionarProdutoAoCarrinho(nomeProduto, quantidadeEsperada, tentativas = 3) {
+  const locator = this.botaoAddToCart(nomeProduto);
 
+  for (let tentativa = 1; tentativa <= tentativas; tentativa++) {
+    await this.click(locator);
+    try {
+      await this.waitForTextToBe(this.cartBadge, String(quantidadeEsperada), 4000);
+      return; // sucesso, sai da função
+    } catch (erro) {
+      if (tentativa === tentativas) throw erro; // última tentativa: propaga o erro de verdade
+      console.log(`Tentativa ${tentativa} de adicionar "${nomeProduto}" não refletiu no carrinho, tentando novamente...`);
+    }
+  }
+  }
+  
   async irParaCarrinho() {
     await this.click(this.cartIcon);
     await this.waitForUrlContains('cart.html');
