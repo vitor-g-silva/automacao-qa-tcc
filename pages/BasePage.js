@@ -18,8 +18,15 @@ class BasePage {
   }
 
   async click(locator) {
-    const el = await this.waitForVisible(locator);
-    await el.click();
+      const el = await this.driver.wait(async () => {
+    const elementos = await this.driver.findElements(locator);
+    if (elementos.length === 0) return null;
+    const visivel = await elementos[0].isDisplayed();
+    const habilitado = await elementos[0].isEnabled();
+    return (visivel && habilitado) ? elementos[0] : null;
+  }, this.timeout, `Elemento não ficou clicável a tempo: ${locator}`);
+
+  await el.click();
   }
 
   async type(locator, texto) {
