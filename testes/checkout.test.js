@@ -40,13 +40,16 @@ describe('Regressão E2E - Fluxo de Checkout', () => {
   expect(carregou).toBe(true);
 });
 
-  test('Deve adicionar 2 produtos ao carrinho', async () => {    
+  test('Deve adicionar 2 produtos ao carrinho', async () => {   
   await inventoryPage.adicionarProdutoAoCarrinho(env.PRODUTOS.ITEM_1.NOME);
+  await inventoryPage.waitForTextToBe(inventoryPage.cartBadge, '1');
+
   await inventoryPage.adicionarProdutoAoCarrinho(env.PRODUTOS.ITEM_2.NOME);
+  await inventoryPage.waitForTextToBe(inventoryPage.cartBadge, '2');
 
   const quantidadeNoCarrinho = await inventoryPage.getText(inventoryPage.cartBadge);
   expect(quantidadeNoCarrinho).toBe('2');
-  await inventoryPage.irParaCarrinho();  
+  await inventoryPage.irParaCarrinho();
   });
 
   test('Deve preencher os dados de entrega no checkout', async () => { 

@@ -45,6 +45,17 @@ class BasePage {
   await this.waitForVisible(locator); // espera pelo menos o primeiro aparecer
   const elementos = await this.driver.findElements(locator);
   return Promise.all(elementos.map((el) => el.getText()));}
-  }
 
+  async waitForTextToBe(locator, textoEsperado, timeout = this.timeout) {
+  await this.driver.wait(async () => {
+    const elementos = await this.driver.findElements(locator);
+    if (elementos.length === 0) return false;
+    const textoAtual = await elementos[0].getText();
+    return textoAtual === textoEsperado;
+  }, timeout, `Elemento não atingiu o texto esperado: "${textoEsperado}"`);
+   }
+
+}
+
+  
 module.exports = BasePage;
